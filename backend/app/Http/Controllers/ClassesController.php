@@ -14,6 +14,7 @@ class ClassesController extends Controller
             'name' => $request->input('name'),
             'subject' => $request->input('subject'),
             'day_of_week' => $request->input('day_of_week'),
+            'time_slot' => $request->input('time_slot'),
             'teacher_name'  => $request->input('teacher_name'),
             'max_students' => $request->input('max_students')
         ]);
