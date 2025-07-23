@@ -13,18 +13,9 @@ http://localhost:80
 
 # Script demo api
 # Add parent
-curl -X POST http://localhost:8000/api/parents \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Nguyễn Thị Hoa",
-    "phone": "0976007898",
-    "email": "hoapt@gmail.com"
-  }'
-
+curl -X POST http://localhost:8000/api/parents -H "Content-Type: application/json" -d '{ "name": "Nguyễn Thị Hoa", "phone": "0976007898", "email": "hoapt@gmail.com" }'
 # Add student
-curl -X POST http://localhost:8000/api/students \
-  -H "Content-Type: application/json" \
-  -d '{
+curl -X POST http://localhost:8000/api/students -H "Content-Type: application/json" -d '{
     "name": "Nguyễn Thị Nguyệt",
     "dob": "10/9/2010",
     "gender": 0,
@@ -32,9 +23,7 @@ curl -X POST http://localhost:8000/api/students \
     "parent_id": 1
   }'
 # Add class
-curl -X POST http://localhost:8000/api/classes \
-  -H "Content-Type: application/json" \
-  -d '{
+curl -X POST http://localhost:8000/api/classes -H "Content-Type: application/json" -d '{
     "name": "Lớp tô màu 1",
     "subject": "Tô màu",
     "day_of_week": 2,
@@ -44,9 +33,7 @@ curl -X POST http://localhost:8000/api/classes \
 # List class on day
 curl -X GET "http://localhost:8000/api/classes?day=3"
 # Add subscriptions
-curl -X POST http://localhost:8000/api/subscriptions \
-  -H "Content-Type: application/json" \
-  -d '{
+curl -X POST http://localhost:8000/api/subscriptions -H "Content-Type: application/json" -d '{
     "student_id": 1,
     "package_name": "Gói học thanh nhạc 10 buổi",
     "start_date": "08/1/2025",
@@ -54,5 +41,4 @@ curl -X POST http://localhost:8000/api/subscriptions \
     "total_sessions": 11,
     "used_sessions": 11
   }'
-
 
