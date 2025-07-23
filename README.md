@@ -1,6 +1,6 @@
-# teenuplms
+# Teenuplms
 
-# Run project in folder teenuplms, use docker compose
+# Run project teenuplms with docker compose
 docker-compose up -d
 
 # Backend api url
