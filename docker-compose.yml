@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: pass 
+      MYSQL_DATABASE: teenuplms
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./teenuplms.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: teenuplms
+      DB_USERNAME: root
+      DB_PASSWORD: pass
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:
+
