@@ -1,6 +1,6 @@
 # teenuplms
 
-# Chay project tai folder teenuplms, su dung docker compose
+# Run project in folder teenuplms, use docker compose
 docker-compose up -d
 
 # Backend api url
@@ -11,8 +11,8 @@ http://localhost:80
 
 # File sql data ./teenuplms.sql
 
-# Lenh script demo api
-# Them bo me hoc sinh
+# Script demo api
+# Add parent
 curl -X POST http://localhost:8000/api/parents \
   -H "Content-Type: application/json" \
   -d '{
@@ -21,7 +21,7 @@ curl -X POST http://localhost:8000/api/parents \
     "email": "hoapt@gmail.com"
   }'
 
-# Them hoc sinh
+# Add student
 curl -X POST http://localhost:8000/api/students \
   -H "Content-Type: application/json" \
   -d '{
@@ -31,7 +31,7 @@ curl -X POST http://localhost:8000/api/students \
     "current_grade": "K1",
     "parent_id": 1
   }'
-# Them lop
+# Add class
 curl -X POST http://localhost:8000/api/classes \
   -H "Content-Type: application/json" \
   -d '{
@@ -41,10 +41,9 @@ curl -X POST http://localhost:8000/api/classes \
     "teacher_name": "Ngô Thị Ngân",
     "max_students": 11
   }'
-# Danh sach lop theo ngay
+# List class on day
 curl -X GET "http://localhost:8000/api/classes?day=3"
-# Tao goi hoc
-# Them lop
+# Add subscriptions
 curl -X POST http://localhost:8000/api/subscriptions \
   -H "Content-Type: application/json" \
   -d '{
