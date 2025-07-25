@@ -2,6 +2,7 @@
 import TheWelcome from '../components/TheWelcome.vue'
 import { reactive, ref, onMounted } from 'vue'
 import api from '@/services/api'
+import Notification from '../components/Notification.vue'
 
 const parent = reactive({
   name: '',
@@ -22,6 +23,9 @@ const class_registrations = reactive({
   student_id: '',
   time_slot: ''
 })
+
+const show = ref(false)
+const message = ref('Thành công! Dữ liệu đã được lưu.')
 
 const timeList = ref([
   { id: 8, name: '8H'},
@@ -56,7 +60,7 @@ const fetchStudentList = async () => {
     const response = await api.get('/api/students') // API URL thực tế
     studentList.value = response.data
   } catch (error) {
-    console.error('Lỗi khi tải danh sách phụ huynh:', error)
+    console.error('Lỗi khi tải danh sách học sinh:', error)
   }
 }
 const classAndDay = ref([]);
@@ -65,7 +69,7 @@ const fetchClassAndDay = (weekday) => {
     const response = api.get('/api/classes') // API URL thực tế
     classAndDay.value = response.data;
   } catch (error) {
-    console.error('Lỗi khi tải danh sách phụ huynh:', error)
+    console.error('Lỗi khi tải danh sách lớp học:', error)
     return []
   }
 }
@@ -81,7 +85,7 @@ const submitFormParent = () => {
   console.log('Dữ liệu gửi đi:', parent)
   api.post('/api/parents', parent)
   .then(res => {
-    alert('Đã lưu thành công!');
+    show.value = true
     parent.name = null;
     parent.phone = null;
     parent.email = null;
@@ -94,12 +98,13 @@ const submitFormStudent = () => {
   console.log('Dữ liệu gửi đi:', student)
   api.post('/api/students', student)
   .then(res => {
-    alert('Đã lưu thành công!');
+    show.value = true
     student.name = null;
     student.dob = null;
     student.gender = null;
     student.current_grade = null;
     student.parent_id = null;
+    fetchStudentList();
   })
   .catch(err => console.error(err))
 }
@@ -108,10 +113,11 @@ const submitFormClassRegister = () => {
   console.log('Dữ liệu gửi đi:', student)
   api.post(`/api/classes/${class_registrations.class_id}/register`, class_registrations)
   .then(res => {
-    alert('Đã lưu thành công!');
+    show.value = true
     class_registrations.class_id = null;
     class_registrations.student_id = null;
     class_registrations.time_slot = null;
+    fetchClassAndDay();
   })
   .catch(err => console.error(err))
 }
@@ -119,6 +125,12 @@ const submitFormClassRegister = () => {
 
 <template>
   <div class="max-w-3xl mx-auto p-6 bg-white shadow border rounded-lg space-y-8">
+    <Notification
+      v-if="show"
+      :message="message"
+      :duration="4000"
+      @close="show = false"
+    />
     <h2 class="text-xl font-semibold">Phần mềm LMS</h2>
   <!-- Parents Form -->
   <div>
